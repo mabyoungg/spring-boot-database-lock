@@ -1,1 +1,38 @@
-spring.application.name=spring-boot-database-lock
+server:
+  port: 8090
+spring:
+  profiles:
+    active: dev
+    include: secret
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    #    url: jdbc:mysql://localhost:3306/sb_database_lock
+    #    username: root
+    #    password: 1234
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:./db_dev;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+    open-in-view: false
+logging:
+  level:
+    org.example.springbootdatabaselock: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.orm.jdbc.extract: TRACE
+    org.springframework.transaction.interceptor: TRACE
