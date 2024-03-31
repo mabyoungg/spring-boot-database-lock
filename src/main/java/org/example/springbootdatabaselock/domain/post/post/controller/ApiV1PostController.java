@@ -1,6 +1,7 @@
 package org.example.springbootdatabaselock.domain.post.post.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.springbootdatabaselock.domain.post.post.entity.Post;
 import org.example.springbootdatabaselock.domain.post.post.service.PostService;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,5 +22,17 @@ public class ApiV1PostController {
             @PathVariable long id
     ) {
         return postService.findById(id).get();
+    }
+
+    @SneakyThrows
+    @GetMapping("/{id}/withShareLock")
+    public Post getWithShareLockPost(
+            @PathVariable long id
+    ) {
+        Post post = postService.findWithShareLockById(id).get();
+
+        Thread.sleep(10_000L);
+
+        return post;
     }
 }

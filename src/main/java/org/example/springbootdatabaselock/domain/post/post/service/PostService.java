@@ -37,4 +37,8 @@ public class PostService {
     public Optional<Post> findById(long id) {
         return postRepository.findById(id);
     }
+
+    public Optional<Post> findWithShareLockById(long id) {
+        return postRepository.findWithShareLockById(id);
+    }
 }
