@@ -3,6 +3,7 @@ package org.example.springbootdatabaselock.domain.post.post.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.springbootdatabaselock.domain.post.post.entity.Post;
 import org.example.springbootdatabaselock.domain.post.post.repository.PostRepository;
 import org.example.springbootdatabaselock.global.rsData.RsData;
@@ -44,5 +45,24 @@ public class PostService {
 
     public Optional<Post> findWithWriteLockById(long id) {
         return postRepository.findWithWriteLockById(id);
+    }
+
+    @Transactional
+    public Post modifyWithPessimistic(long id, String title) {
+        Post post = postRepository.findWithWriteLockById(id).get();
+        post.setTitle(title);
+
+        return post;
+    }
+
+    @SneakyThrows
+    @Transactional
+    public Post modifyWithOptimistic(long id, String title) {
+        Post post = postRepository.findById(id).get();
+        post.setTitle(title);
+
+        Thread.sleep(10_000L);
+
+        return post;
     }
 }

@@ -49,4 +49,26 @@ public class ApiV1PostController {
 
         return post;
     }
+
+    @GetMapping("/{id}/putWithPessimistic")
+    @Transactional
+    public Post modifyWithPessimistic(
+            @PathVariable long id,
+            String title
+    ) {
+        Post post = postService.modifyWithPessimistic(id, title);
+
+        return post;
+    }
+
+    @GetMapping("/{id}/putWithOptimistic")
+    @Transactional
+    public Post modifyWithOptimistic(
+            @PathVariable long id,
+            String title
+    ) {
+        Post post = postService.modifyWithOptimistic(id, title);
+
+        return post;
+    }
 }
