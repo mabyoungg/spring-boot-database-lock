@@ -59,9 +59,12 @@ public class PostService {
     @Transactional
     public Post modifyWithOptimistic(long id, String title) {
         Post post = postRepository.findById(id).get();
-        post.setTitle(title);
+
+        write("제목 new");
 
         Thread.sleep(10_000L);
+
+        post.setTitle(title);
 
         return post;
     }
